@@ -85,7 +85,7 @@ def convert_from_binary(arr, _dtype=np.uint32):
   for i in range(num_words):
     for j in range(WORD_SIZE()):
         pos = WORD_SIZE()*i+j
-        X[:, i] += 2**(WORD_SIZE()-1-j)*arr[:, pos]
+        X[:, i] += arr[:, pos].astype(_dtype) << (WORD_SIZE()-1-j)
   return(X);
 
 def check_testvectors():
