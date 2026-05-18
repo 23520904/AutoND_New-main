@@ -1,7 +1,7 @@
-from keras.models import Model
-from keras.layers import Dense, Conv1D, Input, Reshape, Permute, Add, Flatten, BatchNormalization, Activation
-from keras import backend as K
-from keras.regularizers import l2
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense, Conv1D, Input, Reshape, Permute, Add, Flatten, BatchNormalization, Activation
+from tensorflow.keras import backend as K
+from tensorflow.keras.regularizers import l2
 
 
 #make residual tower of convolutional blocks

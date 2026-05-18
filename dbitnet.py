@@ -32,8 +32,8 @@ def make_model(input_size=64, n_filters=32, n_add_filters=16):
     x = inputs
 
     # normalize the input data to a range of [-1, 1]:
-    x = tf.subtract(x, 0.5)
-    x = tf.divide(x, 0.5)
+    x = x - 0.5
+    x = x / 0.5
 
     for dilation_rate in dilation_rates:
         ### wide-narrow blocks

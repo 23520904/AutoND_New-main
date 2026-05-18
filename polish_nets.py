@@ -66,8 +66,7 @@ def train_one_round(model,
             print(f"loading weights from file {weight_file}...")
             model.load_weights(weight_file)
 
-    # create model checkpoint callback for this round
-    checkpoint = ModelCheckpoint(f'{log_prefix}_{model_name}_round{round_number}.h5', monitor='val_loss', save_best_only = True)
+    checkpoint = ModelCheckpoint(f'{log_prefix}_{model_name}_round{round_number}.h5', monitor='val_loss', save_best_only = True, save_weights_only = True)
 
     #------------------------------------------------
     # Train the model
@@ -78,12 +77,12 @@ def train_one_round(model,
                         # verbose=True)
 
     # model.save(f'{log_prefix}_{model_name}_round{round_number}.h5')
-    print("Best validation accuracy: ", np.max(history.history['val_acc']))
+    print("Best validation accuracy: ", np.max(history.history.get('val_acc', history.history.get('val_accuracy'))))
 
     # save the training history
     # pd.to_pickle(history.history, f'{log_prefix}_{model_name}_training_history_round{round_number}.pkl')
     
-    return np.max(history.history['val_acc'])
+    return np.max(history.history.get('val_acc', history.history.get('val_accuracy')))
 
 def polish_neural_distinguisher(local_best_val_acc,polishStep,LRs,sTimes,starting_round, 
                                data_generator, 
@@ -222,6 +221,8 @@ def main(cipher_name,scenario,starting_round,diffs,sTimes,polishStep,LRs,local_b
     cipher = importlib.import_module('ciphers.' + cipher_name, package='ciphers')
     
     output_dir = f'polish_results_epoches{EPOCHS}_{cipher_name}'
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
     
     plain_bits = cipher.plain_bits
     key_bits = cipher.key_bits
