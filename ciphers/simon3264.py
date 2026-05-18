@@ -71,7 +71,7 @@ def expand_key(k, t):
 #and so on
 #it returns an array of bit vectors containing the same data
 def convert_to_binary(arr):
-  X = np.zeros((len(arr) * WORD_SIZE(),len(arr[0])),dtype=np.uint8);
+  X = np.zeros((len(arr) * WORD_SIZE(),len(arr[0])),dtype=np.uint64);
   for i in range(len(arr) * WORD_SIZE()):
     index = i // WORD_SIZE();
     offset = WORD_SIZE() - (i % WORD_SIZE()) - 1;
