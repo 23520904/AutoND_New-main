@@ -70,10 +70,17 @@ def train_one_round(model,
     # load weight checkpoint from previous round?
     if load_weight_file:
         logging.info("loading weights from previous round...")
-        model.load_weights(f'{log_prefix}_{model_name}_round{round_number-1}.h5')
+        model.load_weights(
+        f'{log_prefix}_{model_name}_round{round_number-1}.weights.h5'
+    )
 
     # create model checkpoint callback for this round
-    checkpoint = ModelCheckpoint(f'{log_prefix}_{model_name}_round{round_number}.h5', monitor='val_loss', save_best_only = True)
+    checkpoint = ModelCheckpoint(
+    f'{log_prefix}_{model_name}_round{round_number}.weights.h5',
+    monitor='val_loss',
+    save_best_only=True,
+    save_weights_only=True
+)
     if LR_scheduler == None:
         callbacks = [checkpoint]
     else:
