@@ -92,7 +92,7 @@ def train_one_round(model,
     # Train the model
     #------------------------------------------------
     history = model.fit(X, Y, epochs=epochs, batch_size=BATCHSIZE,
-                        validation_data=(X_val, Y_val), callbacks=callbacks, verbose = 2)
+                        validation_data=(X_val, Y_val), callbacks=callbacks, verbose = 1)
 
 
 
