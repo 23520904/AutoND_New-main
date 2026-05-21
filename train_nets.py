@@ -157,7 +157,7 @@ def train_neural_distinguisher(starting_round, data_generator, model_name, input
             # ------------------------------------------------
             # create data
             logging.info(f"CREATE CIPHER DATA for round {current_round} (training samples={num_samples:.0e}, validation samples={NUM_VAL_SAMPLES:.0e})...")
-            X, Y = data_generator(NUM_SAMPLES, current_round)
+            X, Y = data_generator(num_samples, current_round)
             X_val, Y_val = data_generator(NUM_VAL_SAMPLES, current_round)
 
             # train model for the current round
