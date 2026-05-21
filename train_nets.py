@@ -70,10 +70,17 @@ def train_one_round(model,
     # load weight checkpoint from previous round?
     if load_weight_file:
         logging.info("loading weights from previous round...")
-        model.load_weights(f'{log_prefix}_{model_name}_round{round_number-1}.h5')
+        model.load_weights(
+        f'{log_prefix}_{model_name}_round{round_number-1}.weights.h5'
+    )
 
     # create model checkpoint callback for this round
-    checkpoint = ModelCheckpoint(f'{log_prefix}_{model_name}_round{round_number}.h5', monitor='val_loss', save_best_only = True)
+    checkpoint = ModelCheckpoint(
+    f'{log_prefix}_{model_name}_round{round_number}.weights.h5',
+    monitor='val_loss',
+    save_best_only=True,
+    save_weights_only=True
+)
     if LR_scheduler == None:
         callbacks = [checkpoint]
     else:
@@ -85,7 +92,7 @@ def train_one_round(model,
     # Train the model
     #------------------------------------------------
     history = model.fit(X, Y, epochs=epochs, batch_size=BATCHSIZE,
-                        validation_data=(X_val, Y_val), callbacks=callbacks, verbose = 2)
+                        validation_data=(X_val, Y_val), callbacks=callbacks, verbose = 1)
 
 
 
@@ -150,7 +157,7 @@ def train_neural_distinguisher(starting_round, data_generator, model_name, input
             # ------------------------------------------------
             # create data
             logging.info(f"CREATE CIPHER DATA for round {current_round} (training samples={num_samples:.0e}, validation samples={NUM_VAL_SAMPLES:.0e})...")
-            X, Y = data_generator(NUM_SAMPLES, current_round)
+            X, Y = data_generator(num_samples, current_round)
             X_val, Y_val = data_generator(NUM_VAL_SAMPLES, current_round)
 
             # train model for the current round
